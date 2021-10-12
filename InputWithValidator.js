@@ -11,6 +11,7 @@ class InputWithValidator extends HTMLElement {
     super();
     this.validator = validator;
     const inp = create("input", this);
+    this.inp = inp;
     inp.onkeydown = (e) => {
       if (e.metaKey) {
         return true;
@@ -47,6 +48,15 @@ class InputWithValidator extends HTMLElement {
         inp.value = s3;
       }
     };
+  }
+  get value() {
+    return this.inp.value;
+  }
+  set value(v) {
+    const s2 = this.validator.validate(v);
+    const maxlen = this.getAttribute("maxlength");
+    const s3 = maxlen && s2.length >= maxlen ? s2.substring(0, maxlen) : s2;
+    this.inp.value = s3;
   }
 }
 
