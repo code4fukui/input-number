@@ -10,7 +10,9 @@ https://code4fukui.github.io/input-number/
 
 <script type="module">
 onload = () => {
-  console.log(inp.value);
+  inp.onchange = () => {
+    console.log(inp.value);
+  };
 };
 </script>
 ```
