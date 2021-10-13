@@ -8,3 +8,5 @@ class InputNumber extends InputWithValidator {
 }
 
 customElements.define("input-number", InputNumber);
+
+export { InputNumber };
