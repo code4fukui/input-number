@@ -25,3 +25,5 @@ class AnnotateElement extends HTMLElement {
 }
 
 customElements.define("annotate-element", AnnotateElement);
+
+export { annotateElement };
