@@ -23,7 +23,16 @@ class InputWithValidator extends HTMLElement {
       }
       return s;
     };
+    inp.addEventListener("compositionstart", () => {
+      this.composition = true;
+    });
+    inp.addEventListener("compositionend", () => {
+      this.composition = false;
+    });
     inp.onkeydown = (e) => {
+      if (this.composition) {
+        return false;
+      }
       if (e.metaKey) {
         return true;
       }
@@ -50,6 +59,10 @@ class InputWithValidator extends HTMLElement {
       return s == data;
     };
     inp.onkeyup = () => {
+      if (this.composition) {
+        return;
+      }
+      console.log("kup");
       const s = inp.value;
       const s2 = this.validator.validate(s);
       const s3 = checkMaxLength(s2);
