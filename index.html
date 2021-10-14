@@ -37,6 +37,17 @@ onload = () => {
 </script>
 
 <hr>
+use InputNumber in script<br>
+
+<div id=div></div>
+<script type="module">
+import { InputNumber } from "./input-number.js";
+
+div.appendChild(new InputNumber({ rows: 5, required: "required" }));
+div.appendChild(new InputNumber({ value: 123 }));
+</script>
+
+<hr>
 <a href=https://fukuno.jig.jp/3366>by @taisukef</a>, <a href=https://github.com/code4fukui/input-number/>src on GitHub</a>
 
 <style>

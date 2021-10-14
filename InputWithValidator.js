@@ -9,8 +9,13 @@ const create = (tag, parent) => {
 }
 
 class InputWithValidator extends HTMLElement {
-  constructor(validator) {
+  constructor(validator, opts) {
     super();
+    if (opts) {
+      for (const name in opts) {
+        this.setAttribute(name, opts[name]);
+      }
+    }
     const rows = this.getAttribute("rows");
     const inp = create(rows > 1 ? "textarea" : "input", this);
     inp.rows = rows;
@@ -20,7 +25,8 @@ class InputWithValidator extends HTMLElement {
     this.inp.style.boxSizing = "border-box";
     this.inp.style.width = "100%";
     //this.inp.style.height = "100%";
-    if (this.getAttribute("required") == "required") {
+    const required = this.getAttribute("required");
+    if (required == "required") {
       this.inp.className = "required";
     }
 
@@ -86,6 +92,10 @@ class InputWithValidator extends HTMLElement {
       inp.value = s3;
       checkRequired();
     };
+    const v = this.getAttribute("value");
+    if (v) {
+      this.value = v;
+    }
   }
   onerror(s) {
     annotateElement(this.inp, s);

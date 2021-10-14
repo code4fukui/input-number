@@ -2,8 +2,8 @@ import { NumberValidator } from "./NumberValidator.js";
 import { InputWithValidator } from "./InputWithValidator.js";
 
 class InputNumber extends InputWithValidator {
-  constructor() {
-    super(new NumberValidator());
+  constructor(opts) {
+    super(new NumberValidator(), opts);
     this.inp.inputmode = "numeric";
     //this.inp.setAttribute("inputmode", "numeric");
   }
