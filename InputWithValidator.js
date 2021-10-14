@@ -7,13 +7,21 @@ const create = (tag, parent) => {
   return c;
 }
 
-
 class InputWithValidator extends HTMLElement {
   constructor(validator) {
     super();
     this.validator = validator;
-    const inp = create("input", this);
+    const rows = this.getAttribute("rows");
+    const inp = create(rows > 1 ? "textarea" : "input", this);
+    inp.rows = rows;
+    inp.style.resize = "none";
     this.inp = inp;
+    this.inp.style.boxSizing = "border-box";
+    this.inp.style.width = "100%";
+    //this.inp.style.height = "100%";
+    if (this.getAttribute("required") == "required") {
+      this.inp.className = "required";
+    }
 
     const checkMaxLength = (s) => {
       const maxlen = this.getAttribute("maxlength");
@@ -29,6 +37,15 @@ class InputWithValidator extends HTMLElement {
     inp.addEventListener("compositionend", () => {
       this.composition = false;
     });
+    const checkRequired = () => {
+      if (this.getAttribute("required") == "required") {
+        if (this.inp.value.length > 0) {
+          this.inp.classList.remove("required");
+        } else {
+          this.inp.classList.add("required");
+        }
+      }
+    };
     inp.onkeydown = (e) => {
       if (this.composition) {
         return false;
@@ -62,11 +79,11 @@ class InputWithValidator extends HTMLElement {
       if (this.composition) {
         return;
       }
-      console.log("kup");
       const s = inp.value;
       const s2 = this.validator.validate(s);
       const s3 = checkMaxLength(s2);
       inp.value = s3;
+      checkRequired();
     };
   }
   onerror(s) {
