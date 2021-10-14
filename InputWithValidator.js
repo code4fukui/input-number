@@ -13,7 +13,9 @@ class InputWithValidator extends HTMLElement {
     super();
     if (opts) {
       for (const name in opts) {
-        this.setAttribute(name, opts[name]);
+        if (opts[name] != null) {
+          this.setAttribute(name, opts[name]);
+        }
       }
     }
     const rows = this.getAttribute("rows");
