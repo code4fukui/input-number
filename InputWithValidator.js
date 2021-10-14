@@ -1,5 +1,6 @@
 import { annotateElement } from "./annotateElement.js";
 //import { create } from "https://js.sabae.cc/stdcomp.js";
+import { NewlineValidator } from "./NewlineValidator.js";
 
 const create = (tag, parent) => {
   const c = document.createElement(tag, parent);
@@ -10,10 +11,10 @@ const create = (tag, parent) => {
 class InputWithValidator extends HTMLElement {
   constructor(validator) {
     super();
-    this.validator = validator;
     const rows = this.getAttribute("rows");
     const inp = create(rows > 1 ? "textarea" : "input", this);
     inp.rows = rows;
+    this.validator = rows > 1 ? new NewlineValidator(validator) : validator;
     inp.style.resize = "none";
     this.inp = inp;
     this.inp.style.boxSizing = "border-box";

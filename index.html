@@ -10,7 +10,7 @@
 <div>input-number</div><input-number id=inpnum1></input-number><div>can't input any other numbers</div>
 <div>input-number maxlength=5</div><input-number id=inpnum2 maxlength=5></input-number><div>and limit 5 numbers</div>
 <div>input-number required</div><input-number id=inpnum5 required=required></input-number><div>and required</div>
-<div>input-number rows=4</div><input-number id=inpnum6 rows=4 maxlength=200 required=required></input-number><div>and required</div>
+<div>input-number required rows=4</div><input-number id=inpnum6 required=required rows=4 maxlength=200 required=required></input-number><div>and required</div>
 <div>input type=number maxlength=5</div><input type="number" id=inpnum3 max=99999 min=0><div>can put over 5 numbers</div>
 <div>input pattern="^[0-9]+$"</div><input pattern="^[0-9]+$" id=inpnum4 title="半角数字で入力して下さい。"><div>ignore pattern</div>
 </div>
@@ -51,7 +51,7 @@ annotate-element {
   padding: .1em .8em;
   font-size: 80%;
 }
-input.required {
+.required {
   background: #fdd;
 }
 </style>

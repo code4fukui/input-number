@@ -9,11 +9,11 @@ class NumberValidator extends Validator {
   }
   normalize(c) {
     if (c == "") {
-      return null;
+      return c;
     }
     const n = "0123456789０１２３４５６７８９".indexOf(c);
     if (n < 0) {
-      return null;
+      return "";
     }
     if (n >= 10) {
       return (n - 10).toString();
