@@ -1,4 +1,4 @@
-const annotateElement = (element, html) => {
+const annotateElement = (element, html, timeout = 1000) => {
   const b = element.getBoundingClientRect();
   const ann = new AnnotateElement(element);
   ann.innerHTML = html;
@@ -15,7 +15,7 @@ const annotateElement = (element, html) => {
   setTimeout(() => {
     removeEventListener("resize", setPos);
     document.body.removeChild(ann);
-  }, 500);
+  }, timeout);
 };
 
 class AnnotateElement extends HTMLElement {

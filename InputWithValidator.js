@@ -27,10 +27,6 @@ class InputWithValidator extends HTMLElement {
     this.inp.style.boxSizing = "border-box";
     this.inp.style.width = "100%";
     //this.inp.style.height = "100%";
-    const required = this.getAttribute("required");
-    if (required == "required") {
-      this.inp.className = "required";
-    }
 
     const checkMaxLength = (s) => {
       const maxlen = this.getAttribute("maxlength");
@@ -94,10 +90,14 @@ class InputWithValidator extends HTMLElement {
       inp.value = s3;
       checkRequired();
     };
+    inp.onchange = () => {
+      checkRequired();
+    };
     const v = this.getAttribute("value");
     if (v) {
       this.value = v;
     }
+    inp.onchange();
   }
   onerror(s) {
     annotateElement(this.inp, s);
