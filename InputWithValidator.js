@@ -42,15 +42,6 @@ class InputWithValidator extends HTMLElement {
     inp.addEventListener("compositionend", () => {
       this.composition = false;
     });
-    const checkRequired = () => {
-      if (this.getAttribute("required") == "required") {
-        if (this.inp.value.length > 0) {
-          this.inp.classList.remove("required");
-        } else {
-          this.inp.classList.add("required");
-        }
-      }
-    };
     inp.onkeydown = (e) => {
       if (this.composition) {
         return false;
@@ -88,16 +79,25 @@ class InputWithValidator extends HTMLElement {
       const s2 = this.validator.validate(s);
       const s3 = checkMaxLength(s2);
       inp.value = s3;
-      checkRequired();
+      this._checkRequired();
     };
     inp.onchange = () => {
-      checkRequired();
+      this._checkRequired();
     };
     const v = this.getAttribute("value");
     if (v) {
       this.value = v;
     }
     inp.onchange();
+  }
+  _checkRequired() {
+    if (this.getAttribute("required") == "required") {
+      if (this.inp.value.length > 0) {
+        this.inp.classList.remove("required");
+      } else {
+        this.inp.classList.add("required");
+      }
+    }
   }
   onerror(s) {
     annotateElement(this.inp, s);
@@ -110,6 +110,7 @@ class InputWithValidator extends HTMLElement {
     const maxlen = this.getAttribute("maxlength");
     const s3 = maxlen && s2.length >= maxlen ? s2.substring(0, maxlen) : s2;
     this.inp.value = s3;
+    this._checkRequired();
   }
 }
 
