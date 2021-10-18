@@ -31,7 +31,7 @@ class InputWithValidator extends HTMLElement {
     const checkMaxLength = (s) => {
       const maxlen = this.getAttribute("maxlength");
       if (maxlen && s.length > maxlen) {
-        this.onerror(`長さは${maxlen}文字までです`);
+        this.onerror(`入力可能な文字数は${maxlen}文字です`);
         return s.substring(0, maxlen);
       }
       return s;
@@ -39,8 +39,13 @@ class InputWithValidator extends HTMLElement {
     inp.addEventListener("compositionstart", () => {
       this.composition = true;
     });
-    inp.addEventListener("compositionend", () => {
+    inp.addEventListener("compositionend", (e) => {
       this.composition = false;
+      const s2 = this.validator.validate(e.data);
+      const maxlen = this.getAttribute("maxlength");
+      const s3 = maxlen && s2.length >= maxlen ? s2.substring(0, maxlen) : s2;
+      this.inp.value = s3;
+      this._checkRequired();
     });
     inp.onkeydown = (e) => {
       if (this.composition) {
