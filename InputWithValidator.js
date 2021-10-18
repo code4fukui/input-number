@@ -41,11 +41,7 @@ class InputWithValidator extends HTMLElement {
     });
     inp.addEventListener("compositionend", (e) => {
       this.composition = false;
-      const s2 = this.validator.validate(e.data);
-      const maxlen = this.getAttribute("maxlength");
-      const s3 = maxlen && s2.length >= maxlen ? s2.substring(0, maxlen) : s2;
-      this.inp.value = s3;
-      this._checkRequired();
+      inp.onkeyup();
     });
     inp.onkeydown = (e) => {
       if (this.composition) {
