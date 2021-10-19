@@ -20,6 +20,7 @@ class InputWithValidator extends HTMLElement {
     }
     const rows = this.getAttribute("rows");
     const inp = create(rows > 1 ? "textarea" : "input", this);
+    inp.setAttribute("placeholder", this.getAttribute("placeholder") || "");
     inp.rows = rows;
     this.validator = rows > 1 ? new NewlineValidator(validator) : validator;
     inp.style.resize = "none";
