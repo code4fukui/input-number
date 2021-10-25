@@ -105,7 +105,7 @@ class InputWithValidator extends HTMLElement {
     annotateElement(this.inp, s);
   }
   get value() {
-    return this.inp.value;
+    return this.validator.validate(this.inp.value);
   }
   set value(v) {
     const s2 = this.validator.validate(v);
