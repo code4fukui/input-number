@@ -56,6 +56,9 @@ class InputWithValidator extends HTMLElement {
       if (allows.includes(e.key)) {
         return true;
       }
+      if (checkMaxLength(inp.value + "d") != inp.value + "d") { // d = dummy
+        return false;
+      }
       const c = e.key;
       //console.log(c, "valid", this.validator.isValid(c))
       const flg = this.validator.isValid(c);
