@@ -48,10 +48,10 @@ class InputWithValidator extends HTMLElement {
       if (this.composition) {
         return false;
       }
-      if (e.metaKey) {
+      if (e.metaKey || e.ctrlKey || e.altKey) {
         return true;
       }
-      //console.log(e.key, e.metaKey);
+      //console.log(e, e.key, e.metaKey);
       const allows = ["Control", "Shift", "ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown", "Enter", "Meta", "Backspace", "Delete", "Escape", "Tab"];
       if (allows.includes(e.key)) {
         return true;
