@@ -32,7 +32,7 @@ class InputWithValidator extends HTMLElement {
     const checkMaxLength = (s) => {
       const maxlen = this.getAttribute("maxlength");
       if (maxlen && s.length > maxlen) {
-        this.onerror(`入力可能な文字数は${maxlen}文字です`);
+        this.onerror(`入力可能な文字数は${maxlen}文字です。`);
         return s.substring(0, maxlen);
       }
       return s;
@@ -63,7 +63,7 @@ class InputWithValidator extends HTMLElement {
       //console.log(c, "valid", this.validator.isValid(c))
       const flg = this.validator.isValid(c);
       if (!flg) {
-        this.onerror("入力できない文字です");
+        this.onerror("入力できない文字です。");
         return false;
       }
       const s2 = inp.value + c;
