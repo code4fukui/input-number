@@ -9,6 +9,9 @@ class Validator {
     if (s == null || s == "") {
       return s;
     }
+    if (typeof s != "string") {
+      s = s.toString();
+    }
     const res = [];
     for (const c of s) {
       const r = this.normalize(c);
