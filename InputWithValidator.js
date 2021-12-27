@@ -98,6 +98,9 @@ class InputWithValidator extends HTMLElement {
     inp.onchange = () => {
       this._checkRequired();
     };
+    inp.addEventListener("focusout", () => { // for Windows
+      inp.onkeyup();
+    });
     inp.onpaste = (e) => {
       const data = e.clipboardData.getData("Text");
       //const s = this.validator.validate(data);
