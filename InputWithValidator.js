@@ -70,6 +70,9 @@ class InputWithValidator extends HTMLElement {
       if (!c) {
         return;
       }
+      if (c == "Process") { // for Windows
+        return;
+      }
       //console.log(c, "valid", this.validator.isValid(c))
       const flg = this.validator.isValid(c);
       if (!flg) {
