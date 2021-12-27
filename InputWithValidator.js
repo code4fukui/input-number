@@ -45,8 +45,8 @@ class InputWithValidator extends HTMLElement {
       this.composition = false;
       inp.onkeyup();
     });
-    inp.onkeydown = (e) => {
-      if (this.composition) {
+    const checkAllowKeys = (e) => {
+      if (!e) {
         return false;
       }
       if (e.metaKey || e.ctrlKey || e.altKey) {
@@ -54,13 +54,22 @@ class InputWithValidator extends HTMLElement {
       }
       //console.log(e, e.key, e.metaKey);
       const allows = ["Control", "Shift", "ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown", "Enter", "Meta", "Backspace", "Delete", "Escape", "Tab"];
-      if (allows.includes(e.key)) {
+      return allows.includes(e.key);
+    };
+    inp.onkeydown = (e) => {
+      if (this.composition) {
+        return false;
+      }
+      if (checkAllowKeys(e)) {
         return true;
       }
       if (checkMaxLength(inp.value + "d") != inp.value + "d") { // d = dummy
         return false;
       }
       const c = e.key;
+      if (!c) {
+        return;
+      }
       //console.log(c, "valid", this.validator.isValid(c))
       const flg = this.validator.isValid(c);
       if (!flg) {
@@ -70,16 +79,12 @@ class InputWithValidator extends HTMLElement {
       const s2 = inp.value + c;
       return s2 == checkMaxLength(s2);
     };
-    inp.onpaste = (e) => {
-      const data = e.clipboardData.getData("Text");
-      const s = this.validator.validate(data);
-      const s2 = checkMaxLength(this.inp.value + s);
-      // todo: 数値のみ抜き出す、変えられる？
-      return s == data;
-    };
-    inp.onkeyup = () => {
+    inp.onkeyup = (e) => {
       if (this.composition) {
         return;
+      }
+      if (checkAllowKeys(e)) {
+        return true;
       }
       const s = inp.value;
       const s2 = this.validator.validate(s);
@@ -89,6 +94,17 @@ class InputWithValidator extends HTMLElement {
     };
     inp.onchange = () => {
       this._checkRequired();
+    };
+    inp.onpaste = (e) => {
+      const data = e.clipboardData.getData("Text");
+      //const s = this.validator.validate(data);
+      if (!data) {
+        return false;
+      }
+      const s = data.split("").map(c => this.validator.validate(c)).join("");
+      const s2 = checkMaxLength(this.inp.value + s);
+      // todo: 数値のみ抜き出す、変えられる？
+      return s == data;
     };
     const v = this.getAttribute("value");
     if (v) {
